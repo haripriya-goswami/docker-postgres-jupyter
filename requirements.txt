@@ -1,0 +1,2 @@
+psycopg2==2.8.6
+jupyterlab==3.3.2

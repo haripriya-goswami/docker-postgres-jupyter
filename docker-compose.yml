@@ -1,0 +1,35 @@
+version: "3.8"
+services:
+  jupyter_lab:
+    container_name: dinky
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "9090:8888"
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+    networks:
+      - network1
+    depends_on:
+      - db
+
+  db:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=testdb
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    networks:
+      - network1
+
+volumes:
+  db:
+    driver: local
+networks:
+  network1:
